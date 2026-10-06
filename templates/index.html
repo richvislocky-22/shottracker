@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#102b3f">
+    <title>ShotTracker | Women's Lacrosse</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="ShotTracker home">
+        <span class="brand-mark" aria-hidden="true">ST</span>
+        <span>Shot<span class="brand-light">Tracker</span></span>
+      </a>
+      <span class="sport-label">WOMEN'S LACROSSE</span>
+    </header>
+
+    <main class="page-shell">
+      <section class="intro">
+        <div>
+          <p class="eyebrow">GAME DAY COMPANION</p>
+          <h1>Every shot tells a story.</h1>
+          <p class="intro-copy">Tap where the shot came from, then where it hit the goal.</p>
+        </div>
+        <label class="game-field">
+          <span>GAME</span>
+          <input id="game-name" maxlength="100" placeholder="e.g. Northside · Oct 12" autocomplete="off">
+        </label>
+      </section>
+
+      <nav class="goalie-switch" aria-label="Choose which goalie to track">
+        <button type="button" class="side-button active" data-team="our">Our goalie</button>
+        <button type="button" class="side-button" data-team="opponent">Opponent goalie</button>
+      </nav>
+
+      <div class="workspace">
+        <section class="card shot-entry">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">SHOT ENTRY</p>
+              <h2>Record a shot</h2>
+            </div>
+            <span class="step-count"><b>1</b> Field <span>→</span> <b>2</b> Goal</span>
+          </div>
+
+          <div class="game-settings">
+            <label class="select-field quarter-field">
+              <span>Quarter</span>
+              <select id="quarter-select">
+                <option value="1" selected>1st</option>
+                <option value="2">2nd</option>
+                <option value="3">3rd</option>
+                <option value="4">4th</option>
+                <option value="OT">OT</option>
+              </select>
+            </label>
+            <label class="select-field goalie-field">
+              <span>Goalie</span>
+              <select id="goalie-select">
+                <option value="">No goalie set</option>
+                <option value="__add_new__">+ Add new goalie…</option>
+              </select>
+            </label>
+            <div id="goalie-new-field" class="new-goalie-field" hidden>
+              <input id="goalie-new-name" type="text" placeholder="New goalie name or #" maxlength="60">
+              <button id="goalie-new-add" type="button">Add</button>
+              <button id="goalie-new-cancel" type="button">Cancel</button>
+            </div>
+          </div>
+
+          <div class="diagram-grid">
+            <section class="diagram-panel">
+              <div class="diagram-heading">
+                <div>
+                  <span class="diagram-number">01</span>
+                  <h3>Shot location</h3>
+                </div>
+                <span class="hint">Tap the field</span>
+              </div>
+              <div class="svg-wrap field-wrap">
+                <svg id="field-map" class="shot-map" viewBox="0 0 600 420" role="img" aria-label="Clickable women's lacrosse 8-meter arc shot location diagram">
+                  <rect class="field-bg" x="0" y="0" width="600" height="420" rx="14"></rect>
+                  <path class="field-line arc-line" d="M30.0,300.0 A270,270 0 0 1 570.0,300.0"></path>
+                  <path class="zone-shape" data-zone="left-close" d="M250.0,300.0 A50,50 0 0 1 275.0,256.7 L215.0,152.78 A170,170 0 0 0 130.0,300.0 Z"></path>
+                  <path class="zone-shape" data-zone="center-close" d="M275.0,256.7 A50,50 0 0 1 325.0,256.7 L385.0,152.78 A170,170 0 0 0 215.0,152.78 Z"></path>
+                  <path class="zone-shape" data-zone="right-close" d="M325.0,256.7 A50,50 0 0 1 350.0,300.0 L470.0,300.0 A170,170 0 0 0 385.0,152.78 Z"></path>
+                  <path class="zone-shape" data-zone="left-far" d="M130.0,300.0 A170,170 0 0 1 215.0,152.78 L165.0,66.17 A270,270 0 0 0 30.0,300.0 Z"></path>
+                  <path class="zone-shape" data-zone="center-far" d="M215.0,152.78 A170,170 0 0 1 385.0,152.78 L435.0,66.17 A270,270 0 0 0 165.0,66.17 Z"></path>
+                  <path class="zone-shape" data-zone="right-far" d="M385.0,152.78 A170,170 0 0 1 470.0,300.0 L570.0,300.0 A270,270 0 0 0 435.0,66.17 Z"></path>
+                  <path class="field-line zone-divider" d="M130.0,300.0 A170,170 0 0 1 470.0,300.0 M275.0,256.7 L165.0,66.17 M325.0,256.7 L435.0,66.17"></path>
+                  <path class="field-line baseline" d="M30,300 H570"></path>
+                  <circle class="crease" cx="300" cy="300" r="50"></circle>
+                  <path class="goal-frame" d="M278 300 V282 H322 V300"></path>
+                  <g id="field-markers" class="markers" aria-hidden="true"></g>
+                  <g id="field-selection" class="selection" aria-hidden="true"></g>
+                </svg>
+              </div>
+              <p class="diagram-caption" id="field-caption">Choose a spot on the field map</p>
+            </section>
+
+            <section class="diagram-panel">
+              <div class="diagram-heading">
+                <div>
+                  <span class="diagram-number">02</span>
+                  <h3>On goal</h3>
+                </div>
+                <span class="hint">Tap the goal</span>
+              </div>
+              <div class="svg-wrap goal-wrap">
+                <svg id="goal-map" class="shot-map" viewBox="0 0 280 280" role="img" aria-label="Clickable front-facing lacrosse goal">
+                  <rect class="net-back" x="40" y="20" width="200" height="200" rx="4"></rect>
+                  <path class="net-mesh" d="M40 200 L60 220 M40 180 L80 220 M40 160 L100 220 M40 140 L120 220 M40 120 L140 220 M40 100 L160 220 M40 80 L180 220 M40 60 L200 220 M40 40 L220 220 M40 20 L240 220 M240 200 L60 20 M240 180 L80 20 M240 160 L100 20 M240 140 L120 20 M240 120 L140 20 M240 100 L160 20 M240 80 L180 20 M240 60 L200 20 M240 40 L220 20 M40 40 L60 20 M40 60 L80 20 M40 80 L100 20 M40 100 L120 20 M40 120 L140 20 M40 140 L160 20 M40 160 L180 20 M40 180 L200 20 M40 200 L220 20 M40 220 L240 20 M240 40 L60 220 M240 60 L80 220 M240 80 L100 220 M240 100 L120 220 M240 120 L140 220 M240 140 L160 220 M240 160 L180 220 M240 180 L200 220 M240 200 L220 220"></path>
+                  <path class="goal-post" d="M38 20 H242 M38 20 V220 M242 20 V220"></path>
+                  <g id="goal-markers" class="markers" aria-hidden="true"></g>
+                  <g id="goal-selection" class="selection" aria-hidden="true"></g>
+                </svg>
+              </div>
+              <p class="diagram-caption" id="goal-caption">Choose a spot in the goal or on a post</p>
+            </section>
+          </div>
+
+          <div class="entry-controls">
+            <fieldset class="result-picker">
+              <legend>RESULT</legend>
+              <label class="result-option goal-option">
+                <input type="radio" name="result" value="goal" checked>
+                <span class="result-dot"></span> Goal
+              </label>
+              <label class="result-option save-option">
+                <input type="radio" name="result" value="save">
+                <span class="result-dot"></span> Save
+              </label>
+            </fieldset>
+            <div class="modifier-toggles">
+              <label class="bounce-toggle">
+                <input id="bounce-shot" type="checkbox">
+                <span class="bounce-box">B</span>
+                <span>Bounce shot</span>
+              </label>
+              <label class="bounce-toggle post-toggle">
+                <input id="post-hit" type="checkbox">
+                <span class="bounce-box post-box">P</span>
+                <span>Hit post</span>
+              </label>
+              <label class="player-number-field">
+                <span>Player #</span>
+                <input id="player-number" type="text" inputmode="numeric" maxlength="10" placeholder="optional">
+              </label>
+            </div>
+            <button type="button" class="primary-button" id="record-shot">Record shot <span aria-hidden="true">↗</span></button>
+          </div>
+          <p class="message" id="message" role="status" aria-live="polite"></p>
+        </section>
+
+        <aside class="card game-summary">
+          <div class="section-heading summary-heading">
+            <div>
+              <p class="eyebrow">LIVE GAME</p>
+              <h2>At a glance</h2>
+            </div>
+            <a class="export-link" id="export-link" href="/export.csv">Export CSV <span aria-hidden="true">↓</span></a>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-tile">
+              <span class="stat-label">SHOTS</span>
+              <strong id="stat-shots">0</strong>
+            </div>
+            <div class="stat-tile">
+              <span class="stat-label">GOALS</span>
+              <strong class="stat-goals" id="stat-goals">0</strong>
+            </div>
+            <div class="stat-tile">
+              <span class="stat-label">SAVES</span>
+              <strong class="stat-saves" id="stat-saves">0</strong>
+            </div>
+            <div class="stat-tile">
+              <span class="stat-label">SAVE %</span>
+              <strong id="stat-save-pct">—</strong>
+            </div>
+          </div>
+
+          <section class="zones-section">
+            <div class="subheading">
+              <h3>Shot origin</h3>
+              <span>by field zone</span>
+            </div>
+            <div class="zone-list" id="zone-list"></div>
+          </section>
+
+          <section class="recent-section">
+            <div class="subheading">
+              <h3>Recent shots</h3>
+              <span id="shot-count-label">0 recorded</span>
+            </div>
+            <ol class="shot-list" id="shot-list"></ol>
+            <p class="empty-state" id="empty-state">Your shots will show up here as you record them.</p>
+          </section>
+        </aside>
+      </div>
+      <footer class="page-footer">
+        <span><i class="legend-goal"></i> Goal <i class="legend-save"></i> Save <b class="legend-bounce">B</b> Bounce shot <b class="legend-post-mark">P</b> Hit post</span>
+        <span>Shots stay on this device.</span>
+      </footer>
+    </main>
+
+    <div class="edit-overlay" id="edit-overlay" hidden>
+      <div class="edit-dialog" role="dialog" aria-modal="true" aria-labelledby="edit-title">
+        <h3 id="edit-title">Edit shot</h3>
+        <div class="edit-result-row">
+          <label><input type="radio" name="edit-result" value="goal"> Goal</label>
+          <label><input type="radio" name="edit-result" value="save"> Save</label>
+        </div>
+        <div class="edit-toggle-row">
+          <label><input id="edit-bounce" type="checkbox"> Bounce shot</label>
+          <label><input id="edit-post-hit" type="checkbox"> Hit post</label>
+        </div>
+        <label class="edit-field">Quarter
+          <select id="edit-quarter">
+            <option value="1">1st</option>
+            <option value="2">2nd</option>
+            <option value="3">3rd</option>
+            <option value="4">4th</option>
+            <option value="OT">OT</option>
+          </select>
+        </label>
+        <label class="edit-field">Goalie
+          <select id="edit-goalie-select">
+            <option value="">No goalie set</option>
+            <option value="__add_new__">+ Add new goalie…</option>
+          </select>
+        </label>
+        <div id="edit-goalie-new-field" class="new-goalie-field" hidden>
+          <input id="edit-goalie-new-name" type="text" placeholder="New goalie name or #" maxlength="60">
+          <button id="edit-goalie-new-add" type="button">Add</button>
+          <button id="edit-goalie-new-cancel" type="button">Cancel</button>
+        </div>
+        <label class="edit-field">Player #
+          <input id="edit-player-number" type="text" inputmode="numeric" maxlength="10" placeholder="optional">
+        </label>
+        <p class="message" id="edit-message" role="status" aria-live="polite"></p>
+        <div class="edit-actions">
+          <button type="button" class="edit-cancel" id="edit-cancel">Cancel</button>
+          <button type="button" class="edit-save" id="edit-save">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

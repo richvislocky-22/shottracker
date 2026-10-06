@@ -1,0 +1,242 @@
+:root {
+  color-scheme: light;
+  --navy: #102b3f;
+  --navy-soft: #294559;
+  --teal: #20a58a;
+  --mint: #e5f5ef;
+  --red: #df5a50;
+  --amber: #e2a33d;
+  --ink: #1d3344;
+  --muted: #7b8993;
+  --line: #e5e9ec;
+  --paper: #ffffff;
+  --page: #f4f7f8;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: "Aptos", "Segoe UI", sans-serif;
+  font-size: 14px;
+}
+button, input { font: inherit; }
+button { cursor: pointer; }
+
+.topbar {
+  height: 66px;
+  padding: 0 max(28px, calc((100vw - 1260px) / 2));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--navy);
+  color: white;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  font: 800 18px "Aptos", "Segoe UI", sans-serif;
+  letter-spacing: -.5px;
+  text-decoration: none;
+}
+.brand-mark {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 9px;
+  background: var(--teal);
+  font-size: 11px;
+  letter-spacing: -.2px;
+}
+.brand-light { font-weight: 500; opacity: .78; }
+.sport-label { color: #b4c1ca; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; }
+
+.page-shell { max-width: 1260px; margin: 0 auto; padding: 42px 28px 24px; }
+.intro { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 27px; }
+.eyebrow { margin: 0 0 7px; color: var(--teal); font-size: 10px; font-weight: 700; letter-spacing: 1.35px; }
+h1, h2, h3, p { margin-top: 0; }
+h1, h2, h3 { font-family: "Aptos", "Segoe UI", sans-serif; }
+h1 { margin-bottom: 7px; color: var(--navy); font-size: clamp(27px, 3vw, 35px); letter-spacing: -1.4px; }
+.intro-copy { margin-bottom: 0; color: var(--muted); font-size: 14px; }
+.game-field { display: grid; gap: 6px; width: min(270px, 35%); color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: 1px; }
+.game-field input { width: 100%; height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 7px; outline: none; background: white; color: var(--ink); font-size: 13px; letter-spacing: 0; }
+.game-field input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px #20a58a18; }
+
+.goalie-switch { display: flex; width: fit-content; padding: 4px; margin-bottom: 16px; gap: 4px; border: 1px solid #e4e9eb; border-radius: 9px; background: #eaf0f2; }
+.side-button { min-width: 130px; padding: 9px 15px; border: 0; border-radius: 6px; background: transparent; color: #6e7f8b; font-size: 12px; font-weight: 600; }
+.side-button.active { background: white; color: var(--navy); box-shadow: 0 1px 4px #102b3f16; }
+
+.workspace { display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(320px, 1fr); align-items: start; gap: 17px; }
+.card { border: 1px solid #e9edef; border-radius: 12px; background: var(--paper); box-shadow: 0 3px 14px #102b3f07; }
+.shot-entry { padding: 23px 24px 14px; }
+.section-heading { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 21px; }
+.game-settings { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; padding: 12px 14px; margin-bottom: 18px; background: #f4f7f7; border: 1px solid #e2e9e9; border-radius: 10px; }
+.section-heading .eyebrow { margin-bottom: 4px; }
+h2 { margin: 0; color: var(--navy); font-size: 20px; letter-spacing: -.5px; }
+.step-count { color: #87949d; font-size: 10px; }
+.step-count b { color: var(--teal); }
+.step-count span { margin: 0 5px; color: #a8b2b8; }
+.diagram-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.diagram-panel { min-width: 0; padding: 11px; border: 1px solid #edf0f1; border-radius: 9px; background: #fbfcfc; }
+.diagram-heading { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 9px; }
+.diagram-heading > div { display: flex; align-items: center; gap: 8px; }
+.diagram-number { display: grid; width: 21px; height: 21px; place-items: center; border-radius: 6px; background: var(--mint); color: #18836f; font-size: 9px; font-weight: 700; }
+.diagram-heading h3 { margin: 0; color: var(--navy); font-size: 12px; }
+.hint { color: #93a0a8; font-size: 9px; }
+.svg-wrap { overflow: hidden; border-radius: 6px; background: #f2f5f5; }
+.shot-map { display: block; width: 100%; height: auto; touch-action: manipulation; }
+#field-map, #goal-map { cursor: crosshair; }
+.field-bg { fill: #f0f4f3; }
+.field-boundary, .field-line { fill: none; stroke: #cbd8d5; stroke-width: 2; }
+.crease { fill: #f8fbfa; stroke: #cad7d3; stroke-width: 2; }
+.crease-inner { fill: #e2eeea; stroke: #cad7d3; stroke-width: 1.5; }
+.goal-frame { fill: none; stroke: #dc7148; stroke-width: 3; }
+.zone-shape { fill: #e5ecea; stroke: #fff; stroke-width: 2.5; transition: fill .15s; }
+.zone-shape:nth-of-type(even) { fill: #edf2f1; }
+.zone-shape:hover, .zone-shape.selected { fill: #cce8df; }
+.arc-line { stroke: #bdccc8; stroke-dasharray: 5 5; }
+.zone-divider { stroke: #d3ddda; stroke-width: 1.5; }
+.diagram-caption { margin: 7px 0 0; color: #8c999f; font-size: 10px; text-align: center; }
+.net-back { fill: #f8faf9; stroke: none; }
+.net-mesh { fill: none; stroke: #d5dedc; stroke-width: 1; }
+.goal-post { fill: none; stroke: #db7148; stroke-width: 8; stroke-linejoin: round; }
+.goal-base { stroke: #b7c5c1; stroke-width: 2; }
+.markers, .selection { pointer-events: none; }
+.marker { stroke: white; stroke-width: 2; }
+.marker.goal { fill: var(--teal); }
+.marker.save { fill: var(--red); }
+.marker-post-ring { fill: none; stroke: var(--amber); stroke-width: 2.5; stroke-dasharray: 3 2.5; }
+.marker-bounce { fill: white; font: 700 9px "Aptos", "Segoe UI", sans-serif; text-anchor: middle; dominant-baseline: central; }
+.selection-ring { fill: #fff; fill-opacity: .65; stroke: var(--navy); stroke-width: 2; stroke-dasharray: 3 2; }
+.selection-center { fill: var(--navy); }
+
+.entry-controls { display: flex; align-items: center; gap: 19px; padding-top: 17px; }
+.result-picker { display: flex; align-items: center; gap: 13px; padding: 0; margin: 0; border: 0; }
+.result-picker legend { float: left; padding: 0; margin-right: 3px; color: #89959d; font-size: 9px; font-weight: 700; letter-spacing: .8px; }
+.result-option { display: inline-flex; align-items: center; gap: 5px; color: #5e6c75; font-size: 11px; cursor: pointer; }
+.result-option input { position: absolute; opacity: 0; pointer-events: none; }
+.result-dot { width: 8px; height: 8px; border-radius: 50%; box-shadow: 0 0 0 2px white, 0 0 0 3px #d3dadd; }
+.goal-option .result-dot { background: var(--teal); }
+.save-option .result-dot { background: var(--red); }
+.result-option input:checked + .result-dot { box-shadow: 0 0 0 2px white, 0 0 0 3px var(--navy-soft); }
+.result-option:focus-within { outline: 2px solid #20a58a66; outline-offset: 3px; }
+.select-field { display: inline-flex; align-items: center; gap: 6px; color: #5e6c75; font-size: 11px; white-space: nowrap; }
+.select-field select { padding: 5px 8px; border: 1px solid #dce4e4; border-radius: 6px; background: white; color: var(--navy); font-size: 12px; }
+.select-field select:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
+.new-goalie-field { display: flex; align-items: center; gap: 6px; margin-top: 6px; flex-basis: 100%; }
+.new-goalie-field[hidden] { display: none; }
+.new-goalie-field input[type="text"] { padding: 5px 8px; border: 1px solid #dce4e4; border-radius: 6px; font-size: 12px; color: var(--navy); }
+.new-goalie-field button { padding: 5px 10px; border: none; border-radius: 6px; font-size: 12px; cursor: pointer; }
+.new-goalie-field #goalie-new-add, .new-goalie-field #edit-goalie-new-add { background: var(--teal); color: white; }
+.new-goalie-field #goalie-new-cancel, .new-goalie-field #edit-goalie-new-cancel { background: #eef2f2; color: #5e6c75; }
+.modifier-toggles { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+.bounce-toggle { display: inline-flex; align-items: center; gap: 7px; color: #5e6c75; font-size: 11px; white-space: nowrap; cursor: pointer; }
+.bounce-toggle input { position: absolute; opacity: 0; }
+.bounce-box { display: grid; width: 22px; height: 22px; place-items: center; border: 1px solid #dce4e4; border-radius: 6px; color: #98a4a8; font-size: 10px; font-weight: 700; }
+.bounce-toggle input:checked + .bounce-box { border-color: #b9e4d8; background: var(--mint); color: #16806c; }
+.bounce-toggle input:focus-visible + .bounce-box { outline: 2px solid var(--teal); outline-offset: 2px; }
+.player-number-field { display: inline-flex; align-items: center; gap: 6px; color: #5e6c75; font-size: 11px; white-space: nowrap; }
+.player-number-field input { width: 64px; padding: 5px 8px; border: 1px solid #dce4e4; border-radius: 6px; color: var(--navy); font-size: 12px; }
+.player-number-field input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
+.post-toggle input:checked + .post-box { border-color: #f3d3ad; background: #fdf1e0; color: #b5721c; }
+.post-toggle input:focus-visible + .post-box { outline: 2px solid var(--amber); outline-offset: 2px; }
+.primary-button { display: inline-flex; align-items: center; justify-content: center; gap: 14px; min-height: 39px; padding: 0 15px; border: 0; border-radius: 7px; background: var(--navy); color: white; font-size: 11px; font-weight: 600; white-space: nowrap; transition: background .15s, transform .15s; }
+.primary-button:hover { transform: translateY(-1px); background: #1b4058; }
+.primary-button:disabled { cursor: wait; opacity: .6; }
+.message { min-height: 16px; margin: 7px 0 0; color: #b34d43; font-size: 10px; }
+.message.success { color: #16806c; }
+
+.game-summary { padding: 22px 20px 17px; }
+.summary-heading { margin-bottom: 16px; }
+.export-link { color: #56716f; font-size: 10px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+.export-link:hover { color: var(--teal); }
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.stat-tile { display: flex; min-height: 66px; flex-direction: column; justify-content: center; gap: 4px; padding: 9px 12px; border: 1px solid #edf0f1; border-radius: 8px; background: #fbfcfc; }
+.stat-label { color: #87949b; font-size: 9px; font-weight: 700; letter-spacing: .8px; }
+.stat-tile strong { color: var(--navy); font: 700 21px "Aptos", "Segoe UI", sans-serif; line-height: 1.1; }
+.stat-tile .stat-goals { color: var(--teal); }
+.stat-tile .stat-saves { color: var(--red); }
+.zones-section, .recent-section { margin-top: 21px; }
+.subheading { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 9px; }
+.subheading h3 { margin: 0; color: var(--navy); font-size: 12px; }
+.subheading span { color: #98a2a8; font-size: 9px; }
+.zone-list { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.zone-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 3px 6px; padding: 7px 8px; border: 1px solid #edf0f1; border-radius: 6px; }
+.zone-name { color: #65737b; font-size: 9px; }
+.zone-record { color: var(--navy); font-size: 10px; font-weight: 700; }
+.zone-bar { grid-column: 1 / -1; overflow: hidden; height: 3px; border-radius: 3px; background: #edf1f1; }
+.zone-bar > span { display: block; height: 100%; border-radius: inherit; background: var(--teal); }
+.shot-list { display: grid; max-height: 210px; overflow: auto; gap: 2px; padding: 0; margin: 0; list-style: none; }
+.shot-row { display: flex; align-items: center; gap: 9px; padding: 7px 3px; border-bottom: 1px solid #f0f2f3; }
+.outcome-mark { display: grid; width: 22px; height: 22px; flex: 0 0 auto; place-items: center; border-radius: 50%; color: white; font-size: 9px; font-weight: 700; }
+.outcome-mark.goal { background: var(--teal); }
+.outcome-mark.save { background: var(--red); }
+.outcome-mark.post-hit { box-shadow: 0 0 0 2px white, 0 0 0 4px var(--amber); }
+.shot-description { min-width: 0; flex: 1; color: #566772; font-size: 10px; }
+.shot-description strong { color: var(--navy); font-weight: 600; }
+.player-badge { display: inline-block; margin-left: 4px; padding: 1px 6px; border-radius: 8px; background: #eef2f3; color: #566772; font-size: 9px; font-weight: 700; }
+.shot-description small { display: block; overflow: hidden; margin-top: 2px; color: #98a3a8; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+.shot-actions { display: flex; flex: 0 0 auto; gap: 2px; }
+.edit-shot { display: grid; width: 25px; height: 25px; flex: 0 0 auto; place-items: center; border: 0; border-radius: 5px; background: transparent; color: #9ba7ab; font-size: 13px; }
+.edit-shot:hover { background: #eef6f4; color: var(--teal); }
+.delete-shot { display: grid; width: 25px; height: 25px; flex: 0 0 auto; place-items: center; border: 0; border-radius: 5px; background: transparent; color: #9ba7ab; font-size: 15px; }
+.delete-shot:hover { background: #fff0ee; color: var(--red); }
+.empty-state { margin: 9px 0 0; color: #9aa5a9; font-size: 10px; line-height: 1.5; }
+.page-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 17px 3px 0; color: #89979d; font-size: 9px; }
+.page-footer i, .legend-bounce, .legend-post-mark { display: inline-block; width: 7px; height: 7px; margin: 0 4px 0 8px; border-radius: 50%; vertical-align: 0; }
+.legend-goal { background: var(--teal); }
+.legend-save { background: var(--red); }
+.page-footer .legend-bounce, .page-footer .legend-post-mark { width: auto; height: auto; margin-left: 10px; color: #16806c; font-size: 9px; vertical-align: 0; }
+.page-footer .legend-post-mark { color: #b5721c; }
+
+.edit-overlay { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; background: #10233199; padding: 16px; }
+.edit-overlay[hidden] { display: none; }
+.edit-dialog { width: 100%; max-width: 320px; padding: 18px; border-radius: 12px; background: white; box-shadow: 0 20px 40px #10233333; }
+.edit-dialog h3 { margin: 0 0 12px; color: var(--navy); font-size: 15px; }
+.edit-field { display: block; margin-bottom: 12px; color: #5e6c75; font-size: 11px; font-weight: 600; }
+.edit-field input[type="text"], .edit-field select { display: block; width: 100%; margin-top: 5px; padding: 7px 9px; border: 1px solid #dce4e4; border-radius: 6px; color: var(--navy); font-size: 13px; background: white; }
+.edit-result-row, .edit-toggle-row { display: flex; gap: 10px; margin-bottom: 12px; }
+.edit-result-row label, .edit-toggle-row label { display: inline-flex; align-items: center; gap: 6px; color: #5e6c75; font-size: 11px; font-weight: 600; cursor: pointer; }
+.edit-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+.edit-actions button { padding: 8px 14px; border: 0; border-radius: 7px; font-size: 11px; font-weight: 600; }
+.edit-cancel { background: #f0f2f3; color: #5e6c75; }
+.edit-save { background: var(--navy); color: white; }
+
+@media (max-width: 960px) {
+  .workspace { grid-template-columns: minmax(0, 1.4fr) minmax(285px, 1fr); gap: 12px; }
+  .shot-entry { padding-right: 17px; padding-left: 17px; }
+  .entry-controls { flex-wrap: wrap; gap: 12px; }
+  .modifier-toggles { margin-left: 0; }
+  .primary-button { margin-left: auto; }
+  .result-picker { width: 100%; }
+}
+@media (max-width: 720px) {
+  .topbar { height: 58px; padding: 0 18px; }
+  .page-shell { padding: 28px 16px 20px; }
+  .intro { align-items: start; flex-direction: column; gap: 16px; margin-bottom: 20px; }
+  .game-field { width: 100%; }
+  .workspace { grid-template-columns: 1fr; }
+  .game-summary { order: 2; }
+}
+@media (max-width: 480px) {
+  .sport-label { font-size: 8px; letter-spacing: 1px; }
+  .page-shell { padding-right: 11px; padding-left: 11px; }
+  .shot-entry { padding: 17px 12px 12px; }
+  .diagram-grid { grid-template-columns: 1fr; gap: 9px; }
+  .diagram-panel { padding: 9px; }
+  .field-wrap { max-height: 290px; }
+  .field-wrap .shot-map { max-height: 290px; }
+  .goal-wrap { max-height: 235px; }
+  .goal-wrap .shot-map { max-height: 235px; }
+  .entry-controls { gap: 10px; }
+  .result-picker { gap: 11px; }
+  .result-picker legend { margin-right: 0; }
+  .primary-button { width: 100%; margin-left: 0; }
+  .section-heading { align-items: start; }
+  .step-count { padding-top: 6px; }
+  .page-footer { align-items: start; flex-direction: column; }
+}
